@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  uniscore_db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "#_J3sus15MyL0Rd_#" # TROQUE PELA SUA SENHA FORTE DO SQL SERVER
+      MSSQL_PID: "Developer"
+      MSSQL_COLLATION: "Latin1_General_CI_AS"
+    ports:
+      - "1433:1433"
+    volumes:
+      - db_data:/var/opt/mssql
+      - ./init_scripts:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "#_J3sus15MyL0Rd_#", "-Q", "SELECT 1"] # TROQUE PELA SUA SENHA FORTE AQUI TAMBÉM
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  uniscore_api:  # <--- Esta linha inicia o serviço
+    build:       # <--- Indentado 2 espaços em relação a 'uniscore_api:'
+      context: .
+      dockerfile: UniScoreBackend/Dockerfile
+    ports:       # <--- Indentado 2 espaços
+      - "5000:80"
+      - "5001:443"
+    environment: # <--- Indentado 2 espaços
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Server=uniscore_db,1433;Database=UniScoreDB;User Id=sa;Password=#_J3sus15MyL0Rd_#;TrustServerCertificate=true;MultipleActiveResultSets=true" # TROQUE PELA SUA SENHA FORTE DO SQL SERVER
+      JwtSettings__SecretKey: "UniScore2025SecretKeyForJWTTokenGeneration123456789"
+      JwtSettings__Issuer: "UniScore.API"
+      JwtSettings__Audience: "UniScore.Client"
+      JwtSettings__ExpiryInHours: "24"
+    depends_on:  # <--- Indentado 2 espaços
+      uniscore_db:
+        condition: service_healthy
+
+volumes:  # <--- Esta linha deve estar no mesmo nível de 'services:' e 'version:'
+  db_data: # <--- Indentado 2 espaços em relação a 'volumes:'
