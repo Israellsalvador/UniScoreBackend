@@ -1,7 +1,7 @@
 version: '3.8' # Pode remover esta linha se quiser evitar o warning de obsoleto
 
 services:
-  uniscore_db:
+  uniscore_db: # <-- ESTA É A DEFINIÇÃO PRINCIPAL DO SERVIÇO uniscore_db
     image: mcr.microsoft.com/mssql/server:2019-latest # Imagem oficial do SQL Server para Linux no Docker
     environment:
       ACCEPT_EULA: "Y" # Aceita o contrato de licença do SQL Server
@@ -14,15 +14,16 @@ services:
       - db_data:/var/opt/mssql # Persiste os dados do banco para que não se percam ao reiniciar o contêiner
       # O caminho para init_scripts agora é ./init_scripts, pois ele estará na mesma pasta do docker-compose.yml
       - ./init_scripts:/docker-entrypoint-initdb.d # Mapeia sua pasta de scripts de inicialização
-    healthcheck: # Healthcheck para garantir que o SQL Server esteja pronto antes da API
+    healthcheck: # <-- O HEALTHCHECK DEVE ESTAR AQUI, INDENTADO SOB O SERVIÇO uniscore_db
       test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "#_J3sus15MyL0Rd_#", "-Q", "SELECT 1"] # TROQUE PELA SUA SENHA FORTE AQUI TAMBÉM
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      interval: 5s
+      timeout: 10s # Aumentar timeout
+      retries: 10 # Aumentar retries
+      start_period: 30s # Adicionar um período inicial para o SQL Server se estabilizar
 
   uniscore_api:
     build:
-      context: . # AGORA O CONTEXTO É A PASTA ATUAL (UniScoreBackend/) onde o docker-compose.yml está
+      context: . # O contexto é a pasta atual (UniScoreBackend/) onde o docker-compose.yml está
       dockerfile: Dockerfile # O Dockerfile está na pasta atual, então é só "Dockerfile"
     ports:
       - "5000:80" # Mapeia a porta 5000 da sua máquina para a porta 80 do contêiner (HTTP)
