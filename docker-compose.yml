@@ -14,12 +14,12 @@ services:
       - db_data:/var/opt/mssql # Persiste os dados do banco para que não se percam ao reiniciar o contêiner
       # O caminho para init_scripts agora é ./init_scripts, pois ele estará na mesma pasta do docker-compose.yml
       - ./init_scripts:/docker-entrypoint-initdb.d # Mapeia sua pasta de scripts de inicialização
-    healthcheck: # <-- O HEALTHCHECK DEVE ESTAR AQUI, INDENTADO SOB O SERVIÇO uniscore_db
-      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "#_J3sus15MyL0Rd_#", "-Q", "SELECT 1"] # TROQUE PELA SUA SENHA FORTE AQUI TAMBÉM
-      interval: 5s
-      timeout: 10s # Aumentar timeout
-      retries: 10 # Aumentar retries
-      start_period: 30s # Adicionar um período inicial para o SQL Server se estabilizar
+      #healthcheck: # <-- O HEALTHCHECK DEVE ESTAR AQUI, INDENTADO SOB O SERVIÇO uniscore_db
+      #test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "#_J3sus15MyL0Rd_#", "-Q", "SELECT 1"] # TROQUE PELA SUA SENHA FORTE AQUI TAMBÉM
+      #interval: 5s
+      #timeout: 10s # Aumentar timeout
+      #retries: 10 # Aumentar retries
+      #start_period: 30s # Adicionar um período inicial para o SQL Server se estabilizar
 
   uniscore_api:
     build:
