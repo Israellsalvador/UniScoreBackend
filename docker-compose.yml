@@ -1,41 +1,45 @@
-version: '3.8'
+version: '3.8' # Pode remover esta linha se quiser evitar o warning de obsoleto
 
 services:
   uniscore_db:
-    image: mcr.microsoft.com/mssql/server:2019-latest
+    image: mcr.microsoft.com/mssql/server:2019-latest # Imagem oficial do SQL Server para Linux no Docker
     environment:
-      ACCEPT_EULA: "Y"
-      SA_PASSWORD: "#_J3sus15MyL0Rd_#" # TROQUE PELA SUA SENHA FORTE DO SQL SERVER
-      MSSQL_PID: "Developer"
-      MSSQL_COLLATION: "Latin1_General_CI_AS"
+      ACCEPT_EULA: "Y" # Aceita o contrato de licença do SQL Server
+      SA_PASSWORD: "#_J3sus15MyL0Rd_#" # TROQUE PELA SUA SENHA FORTE E COMPLEXA (min. 8 caracteres, maiúsculas, minúsculas, números, especial)
+      MSSQL_PID: "Developer" # Edição do SQL Server (Developer, Express, etc.)
+      MSSQL_COLLATION: "Latin1_General_CI_AS" # Collation, ajuste se precisar de outro
     ports:
-      - "1433:1433"
+      - "1433:1433" # Mapeia a porta padrão do SQL Server para sua máquina local
     volumes:
-      - db_data:/var/opt/mssql
-      - ./init_scripts:/docker-entrypoint-initdb.d
-    healthcheck:
+      - db_data:/var/opt/mssql # Persiste os dados do banco para que não se percam ao reiniciar o contêiner
+      # O caminho para init_scripts agora é ./init_scripts, pois ele estará na mesma pasta do docker-compose.yml
+      - ./init_scripts:/docker-entrypoint-initdb.d # Mapeia sua pasta de scripts de inicialização
+    healthcheck: # Healthcheck para garantir que o SQL Server esteja pronto antes da API
       test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "#_J3sus15MyL0Rd_#", "-Q", "SELECT 1"] # TROQUE PELA SUA SENHA FORTE AQUI TAMBÉM
       interval: 10s
       timeout: 5s
       retries: 5
 
-  uniscore_api:  # <--- Esta linha inicia o serviço
-    build:       # <--- Indentado 2 espaços em relação a 'uniscore_api:'
-      context: .
-      dockerfile: UniScoreBackend/Dockerfile
-    ports:       # <--- Indentado 2 espaços
-      - "5000:80"
-      - "5001:443"
-    environment: # <--- Indentado 2 espaços
-      ASPNETCORE_ENVIRONMENT: Development
+  uniscore_api:
+    build:
+      context: . # AGORA O CONTEXTO É A PASTA ATUAL (UniScoreBackend/) onde o docker-compose.yml está
+      dockerfile: Dockerfile # O Dockerfile está na pasta atual, então é só "Dockerfile"
+    ports:
+      - "5000:80" # Mapeia a porta 5000 da sua máquina para a porta 80 do contêiner (HTTP)
+      - "5001:443" # Mapeia a porta 5001 da sua máquina para a porta 443 do contêiner (HTTPS)
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development # Define o ambiente como Desenvolvimento
+      # String de Conexão do SQL Server no Docker
+      # Server=nomedoservico,porta;Database=nomebd;User Id=usuario;Password=senha;Trusted_Connection=false (pois não é Windows Auth);TrustServerCertificate=true;MultipleActiveResultSets=true
       ConnectionStrings__DefaultConnection: "Server=uniscore_db,1433;Database=UniScoreDB;User Id=sa;Password=#_J3sus15MyL0Rd_#;TrustServerCertificate=true;MultipleActiveResultSets=true" # TROQUE PELA SUA SENHA FORTE DO SQL SERVER
+      # Configurações JWT (copiadas do seu appsettings.json)
       JwtSettings__SecretKey: "UniScore2025SecretKeyForJWTTokenGeneration123456789"
       JwtSettings__Issuer: "UniScore.API"
       JwtSettings__Audience: "UniScore.Client"
       JwtSettings__ExpiryInHours: "24"
-    depends_on:  # <--- Indentado 2 espaços
+    depends_on:
       uniscore_db:
-        condition: service_healthy
+        condition: service_healthy # Garante que a API só inicie quando o banco estiver saudável
 
-volumes:  # <--- Esta linha deve estar no mesmo nível de 'services:' e 'version:'
-  db_data: # <--- Indentado 2 espaços em relação a 'volumes:'
+volumes:
+  db_data: # Volume para persistir os dados do banco de dados
