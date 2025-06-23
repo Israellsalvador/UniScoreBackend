@@ -6,6 +6,9 @@ using ProjectEvaluationApi.Data;
 using System.Reflection;
 using System.Text;
 
+// ... outros using ...
+using ProjectEvaluationApi.Services; // <- Certifique-se de que este using está aqui
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -37,54 +40,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 // Add Authorization
 builder.Services.AddAuthorization();
 
+// ✅ REGISTRO DO SERVIÇO DE AUTENTICAÇÃO
+builder.Services.AddScoped<IAuthService, AuthService>();
+
 // Add Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Title = "News & Events API",
-        Version = "v1",
-        Description = "API para gerenciamento de notícias e eventos com anexos",
-        Contact = new OpenApiContact
-        {
-            Name = "Suporte",
-            Email = "suporte@exemplo.com"
-        }
-    });
-    
-    // Add JWT Authentication to Swagger
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Description = "JWT Authorization header usando o esquema Bearer. Exemplo: \"Authorization: Bearer {token}\"",
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer"
-    });
-    
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            new string[] {}
-        }
-    });
-    
-    // Include XML comments
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    if (File.Exists(xmlPath))
-    {
-        c.IncludeXmlComments(xmlPath);
-    }
+    // ... sua configuração Swagger ...
 });
 
 // Add CORS
@@ -101,15 +64,14 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+
+// HABILITA SEMPRE o Swagger
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "News & Events API v1");
-        c.RoutePrefix = string.Empty; // Swagger UI at root
-    });
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "News & Events API v1");
+    c.RoutePrefix = string.Empty;
+});
 
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
@@ -125,3 +87,4 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.Run();
+
