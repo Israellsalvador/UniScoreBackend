@@ -1,0 +1,61 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: project_evaluation_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: ProjectEvaluationDb
+      MYSQL_USER: apiuser
+      MYSQL_PASSWORD: apipassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - project_evaluation_network
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: project_evaluation_api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "8080:80"
+      - "8000:443"
+    depends_on:
+      - mysql
+    networks:
+      - project_evaluation_network
+    restart: unless-stopped
+    volumes:
+      - ./appsettings.json:/app/appsettings.json
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: project_evaluation_phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+    ports:
+      - "8081:80"
+    depends_on:
+      - mysql
+    networks:
+      - project_evaluation_network
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+
+networks:
+  project_evaluation_network:
+    driver: bridge

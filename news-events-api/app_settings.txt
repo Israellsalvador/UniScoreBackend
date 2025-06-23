@@ -1,0 +1,16 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost;Database=ProjectEvaluationDb;User=root;Password=rootpassword;Port=3306;"
+  },
+  "Jwt": {
+    "Key": "ThisIsAVerySecretKeyForJWTTokenGeneration123456789",
+    "Issuer": "ProjectEvaluationApi",
+    "Audience": "ProjectEvaluationApiUsers"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  }
+}

@@ -1,0 +1,234 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ProjectEvaluationApi</name>
+    </assembly>
+    <members>
+        <member name="M:ProjectEvaluationApi.Controllers.AuthController.Login(ProjectEvaluationApi.DTOs.LoginDto)">
+            <summary>
+            Realiza login do usuário
+            </summary>
+            <param name="loginDto">Credenciais de login</param>
+            <returns>Token JWT e informações do usuário</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.AuthController.Register(ProjectEvaluationApi.DTOs.RegisterDto)">
+            <summary>
+            Registra um novo usuário
+            </summary>
+            <param name="registerDto">Dados do usuário a ser registrado</param>
+            <returns>Resultado do registro</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.AvaliacoesController.GetAvaliacoes">
+            <summary>
+            Obtém todas as avaliações
+            </summary>
+            <returns>Lista de avaliações</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.AvaliacoesController.GetAvaliacao(System.Int32)">
+            <summary>
+            Obtém uma avaliação específica por ID
+            </summary>
+            <param name="id">ID da avaliação</param>
+            <returns>Avaliação encontrada</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.AvaliacoesController.CreateAvaliacao(ProjectEvaluationApi.DTOs.CreateAvaliacaoDto)">
+            <summary>
+            Cria uma nova avaliação
+            </summary>
+            <param name="createDto">Dados da avaliação a ser criada</param>
+            <returns>Avaliação criada</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.AvaliacoesController.UpdateAvaliacao(System.Int32,ProjectEvaluationApi.DTOs.UpdateAvaliacaoDto)">
+            <summary>
+            Atualiza uma avaliação existente
+            </summary>
+            <param name="id">ID da avaliação</param>
+            <param name="updateDto">Dados atualizados da avaliação</param>
+            <returns>Resultado da operação</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.AvaliacoesController.DeleteAvaliacao(System.Int32)">
+            <summary>
+            Remove uma avaliação
+            </summary>
+            <param name="id">ID da avaliação</param>
+            <returns>Resultado da operação</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.AvaliacoesController.GetAvaliacoesByPessoa(System.Int32)">
+            <summary>
+            Obtém avaliações por pessoa
+            </summary>
+            <param name="pessoaId">ID da pessoa</param>
+            <returns>Lista de avaliações da pessoa</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.AvaliacoesController.GetAvaliacoesByProjeto(System.Int32)">
+            <summary>
+            Obtém avaliações por projeto
+            </summary>
+            <param name="projetoId">ID do projeto</param>
+            <returns>Lista de avaliações do projeto</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.PessoasController.GetPessoas">
+            <summary>
+            Obtém todas as pessoas
+            </summary>
+            <returns>Lista de pessoas</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.PessoasController.GetPessoa(System.Int32)">
+            <summary>
+            Obtém uma pessoa específica por ID
+            </summary>
+            <param name="id">ID da pessoa</param>
+            <returns>Pessoa encontrada</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.PessoasController.CreatePessoa(ProjectEvaluationApi.DTOs.CreatePessoaDto)">
+            <summary>
+            Cria uma nova pessoa
+            </summary>
+            <param name="createDto">Dados da pessoa a ser criada</param>
+            <returns>Pessoa criada</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.PessoasController.UpdatePessoa(System.Int32,ProjectEvaluationApi.DTOs.UpdatePessoaDto)">
+            <summary>
+            Atualiza uma pessoa existente
+            </summary>
+            <param name="id">ID da pessoa</param>
+            <param name="updateDto">Dados atualizados da pessoa</param>
+            <returns>Resultado da operação</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.PessoasController.DeletePessoa(System.Int32)">
+            <summary>
+            Remove uma pessoa
+            </summary>
+            <param name="id">ID da pessoa</param>
+            <returns>Resultado da operação</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.ProjetosController.GetProjetos">
+            <summary>
+            Obtém todos os projetos
+            </summary>
+            <returns>Lista de projetos</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.ProjetosController.GetProjeto(System.Int32)">
+            <summary>
+            Obtém um projeto específico por ID
+            </summary>
+            <param name="id">ID do projeto</param>
+            <returns>Projeto encontrado</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.ProjetosController.CreateProjeto(ProjectEvaluationApi.DTOs.CreateProjetoDto)">
+            <summary>
+            Cria um novo projeto
+            </summary>
+            <param name="createDto">Dados do projeto a ser criado</param>
+            <returns>Projeto criado</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.ProjetosController.UpdateProjeto(System.Int32,ProjectEvaluationApi.DTOs.UpdateProjetoDto)">
+            <summary>
+            Atualiza um projeto existente
+            </summary>
+            <param name="id">ID do projeto</param>
+            <param name="updateDto">Dados atualizados do projeto</param>
+            <returns>Resultado da operação</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.ProjetosController.DeleteProjeto(System.Int32)">
+            <summary>
+            Remove um projeto
+            </summary>
+            <param name="id">ID do projeto</param>
+            <returns>Resultado da operação</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.ProjetosController.CalcularNotaFinal(System.Int32)">
+            <summary>
+            Calcula a nota final do projeto baseada nas avaliações
+            </summary>
+            <param name="id">ID do projeto</param>
+            <returns>Resultado da operação</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.TiposUsuarioController.GetTiposUsuario">
+            <summary>
+            Obtém todos os tipos de usuário
+            </summary>
+            <returns>Lista de tipos de usuário</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.TiposUsuarioController.GetTipoUsuario(System.Byte)">
+            <summary>
+            Obtém um tipo de usuário específico por ID
+            </summary>
+            <param name="id">ID do tipo de usuário</param>
+            <returns>Tipo de usuário encontrado</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.TiposUsuarioController.CreateTipoUsuario(ProjectEvaluationApi.DTOs.CreateTipoUsuarioDto)">
+            <summary>
+            Cria um novo tipo de usuário
+            </summary>
+            <param name="createDto">Dados do tipo de usuário a ser criado</param>
+            <returns>Tipo de usuário criado</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.TiposUsuarioController.UpdateTipoUsuario(System.Byte,ProjectEvaluationApi.DTOs.UpdateTipoUsuarioDto)">
+            <summary>
+            Atualiza um tipo de usuário existente
+            </summary>
+            <param name="id">ID do tipo de usuário</param>
+            <param name="updateDto">Dados atualizados do tipo de usuário</param>
+            <returns>Resultado da operação</returns>
+        </member>
+        <member name="M:ProjectEvaluationApi.Controllers.TiposUsuarioController.DeleteTipoUsuario(System.Byte)">
+            <summary>
+            Remove um tipo de usuário
+            </summary>
+            <param name="id">ID do tipo de usuário</param>
+            <returns>Resultado da operação</returns>
+        </member>
+        <member name="M:NewsEventsApi.Controllers.EventosController.GetEventos">
+            <summary>
+            Obtém todos os eventos
+            </summary>
+            <returns>Lista de eventos</returns>
+        </member>
+        <member name="M:NewsEventsApi.Controllers.EventosController.GetEvento(System.Int32)">
+            <summary>
+            Obtém um evento específico por ID
+            </summary>
+            <param name="id">ID do evento</param>
+            <returns>Evento encontrado</returns>
+        </member>
+        <member name="M:NewsEventsApi.Controllers.EventosController.CreateEvento(ProjectEvaluationApi.DTOs.CreateEventoDto)">
+            <summary>
+            Cria um novo evento
+            </summary>
+            <param name="createDto">Dados do evento a ser criado</param>
+            <returns>Evento criado</returns>
+        </member>
+        <member name="M:NewsEventsApi.Controllers.EventosController.UpdateEvento(System.Int32,ProjectEvaluationApi.DTOs.UpdateEventoDto)">
+            <summary>
+            Atualiza um evento existente
+            </summary>
+            <param name="id">ID do evento</param>
+            <param name="updateDto">Dados atualizados do evento</param>
+            <returns>Resultado da operação</returns>
+        </member>
+        <member name="M:NewsEventsApi.Controllers.EventosController.DeleteEvento(System.Int32)">
+            <summary>
+            Remove um evento
+            </summary>
+            <param name="id">ID do evento</param>
+            <returns>Resultado da operação</returns>
+        </member>
+        <member name="M:NewsEventsApi.Controllers.EventosController.AddProjetoToEvento(System.Int32,System.Int32)">
+            <summary>
+            Adiciona um projeto ao evento
+            </summary>
+            <param name="eventoId">ID do evento</param>
+            <param name="projetoId">ID do projeto</param>
+            <returns>Resultado da operação</returns>
+        </member>
+        <member name="M:NewsEventsApi.Controllers.EventosController.RemoveProjetoFromEvento(System.Int32,System.Int32)">
+            <summary>
+            Remove um projeto do evento
+            </summary>
+            <param name="eventoId">ID do evento</param>
+            <param name="projetoId">ID do projeto</param>
+            <returns>Resultado da operação</returns>
+        </member>
+    </members>
+</doc>

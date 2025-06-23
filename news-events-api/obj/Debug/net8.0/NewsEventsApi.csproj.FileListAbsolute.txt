@@ -1,0 +1,7 @@
+/Users/fabricio/Documents/DEV/UNISCORE/news-events-api/obj/Debug/net8.0/NewsEventsApi.csproj.AssemblyReference.cache
+/Users/fabricio/Documents/DEV/UNISCORE/news-events-api/obj/Debug/net8.0/NewsEventsApi.GeneratedMSBuildEditorConfig.editorconfig
+/Users/fabricio/Documents/DEV/UNISCORE/news-events-api/obj/Debug/net8.0/NewsEventsApi.AssemblyInfoInputs.cache
+/Users/fabricio/Documents/DEV/UNISCORE/news-events-api/obj/Debug/net8.0/NewsEventsApi.AssemblyInfo.cs
+/Users/fabricio/Documents/DEV/UNISCORE/news-events-api/obj/Debug/net8.0/NewsEventsApi.csproj.CoreCompileInputs.cache
+/Users/fabricio/Documents/DEV/UNISCORE/news-events-api/obj/Debug/net8.0/NewsEventsApi.MvcApplicationPartsAssemblyInfo.cs
+/Users/fabricio/Documents/DEV/UNISCORE/news-events-api/obj/Debug/net8.0/NewsEventsApi.MvcApplicationPartsAssemblyInfo.cache
